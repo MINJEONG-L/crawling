@@ -107,7 +107,7 @@ org = []
 cont = soup.find('div','srchResultListW').find_all('li')
 
 for b in cont:
-  try:
+  try:  #제목이 있으면 ~
     title = b.find('div','cont').find('p','title').get_text()
    except:
     continue
@@ -153,3 +153,22 @@ df['소속기관'] = pd.Series(org)
 df.to_excel(fx_name, index = False, encoding = 'utf-8', engine='openpyxl')
 # csv 형태로 저장하기
 df.to_csv(fc_name, index = False, encoding = 'utf-8-sig')
+```  
+
+
+## 상세 정보 수집
+![image](https://user-images.githubusercontent.com/82145878/178104350-ce9628c6-475a-40ff-8952-9d8c1e95c5ea.png)
+  * 총 검색 건수를 보여주고 수집할 건수 입력받기
+```python
+import math
+total_cnt = soup.find('div','serachBox pd')find('span','num').get_text()
+cnt = int(input('이 중에서 몇 건을 수집하시겠습니까?: '))
+page_cnt = math.ceil(cnt / 10) #한페이지에 10개 게시물
+```  
+
+  * url 주소 수집하기
+    - 상세 페이지(수집한 url)로 가는 방법
+     (1) 해당 논문의 제목을 클릭하는 방법
+     (2) 해당 논문의 URL 주소를 찾아서 driver.get() 명령으로 접속하는 방법
+     
+

@@ -186,24 +186,28 @@ page_cnt = math.ceil(cnt / 10) #한페이지에 10개 게시물
   driver.back()
   time.sleep(2)
   ```  
-    **특정 태그의 특정 속성값을 추출하기 위해서는 find('태그이름')['속성이름']
+    **특정 태그의 특정 속성값을 추출하기 위해서는 find('태그이름')['속성이름']**
 
      
 ## 네이버 iframe
 
-  *저장될 파일위치 지정
+  * 저장될 파일위치 지정
 ```python
 now = time.localtime()
-  s = '%04d-%02d-%02d-%02d-%02d-%02d' % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+s = '%04d-%02d-%02d-%02d-%02d-%02d' % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
 os.makedirs(f_dir+s+'-'+query_txt)
 os.chdir(f_dir+s+'-'+query_txt)
 ```
   
-  * 옵션 버튼 클릭
-  - driver.find_element(By.LINK_TEXT,'평점').click()
-** 해당 페이지에 평점이라는 단어가 오직 하나일때 사용 가능 **  
-  * IFRAME 변경 : 네이버는 IFRAME 사용
-  - driver.switch_to.frame('pointAfterListIframe')
+  * 옵션 버튼 클릭  
+    - driver.find_element(By.LINK_TEXT,'평점').click()  
+  **해당 페이지에 평점이라는 단어가 오직 하나일때 사용 가능**  
+  
+  * IFRAME 변경 : 네이버는 IFRAME 사용  
+    ```python
+    driver.switch_to.frame('pointAfterListIframe')  
     html = driver.page_source
-    soup = BeautifulSoup(html, html.parser')
+    soup = BeautifulSoup(html, html.parser')  
+    ```  
+  
   

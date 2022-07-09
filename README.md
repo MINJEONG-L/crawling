@@ -167,8 +167,26 @@ page_cnt = math.ceil(cnt / 10) #한페이지에 10개 게시물
 ```  
 
   * url 주소 수집하기
-    - 상세 페이지(수집한 url)로 가는 방법
-     (1) 해당 논문의 제목을 클릭하는 방법
-     (2) 해당 논문의 URL 주소를 찾아서 driver.get() 명령으로 접속하는 방법
+    - 상세 페이지(수집한 url)로 가는 방법  
+     (1) 해당 논문의 제목을 클릭하는 방법  
+     (2) 해당 논문의 URL 주소를 찾아서 driver.get() 명령으로 접속하는 방법  
+ ![image](https://user-images.githubusercontent.com/82145878/178104533-954198bf-0e19-4848-9172-d613344358f3.png)  
+    - <a href='url 정보'> 이 논문의 제목에 있다.
+    - 그러나 맨 앞에 도메인 주소가 빠져있음 즉 http://www.riss.kr 가 생략되어서 실제 사용할 때 넣어줘야함
+  ```python
+  url = i.find('p','title').find('a')[href']
+  full = 'http://www.riss.kr' + url
+  time.sleep(1)
+  driver.get(full)
+  
+  html1 = driver.page_source
+  soup1 = BeautifulSoup(html1, 'html.parser')
+  ...
+  ...
+  driver.back()
+  time.sleep(2)
+  ```  
+    **특정 태그의 특정 속성값을 추출하기 위해서는 find('태그이름')['속성이름']
+
      
 

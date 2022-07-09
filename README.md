@@ -87,3 +87,69 @@ sys.stdout = orig_stdout  #원래대로 변경 : 다시 화면에 출력시켜�
   
 ```  
    **strip()함수는 문자열에서만 작동하며 list, tuple 등은 오류**
+   
+   * driver.find_element 의 By 종류  
+    |---|---|---|  
+    |---|---|---|  
+    |---|---|---|  
+    |---|---|---|  
+    
+## 항목별 내용 추출 후 다양한 형식의 파일로 저장하기
+- 항목별로 데이터를 추출하여 리스트에 저장하자
+```python
+no = []
+title = []
+writer = []
+org = []
+```
+- try except else 문 사용하기
+```python
+cont = soup.find('div','srchResultListW').find_all('li')
+
+for b in cont:
+  try:
+    title = b.find('div','cont').find('p','title').get_text()
+   except:
+    continue
+   else:
+    f = open(ft_name, 'a', encoding = 'UFT-8')
+    print("1.번호",num)
+    no.append(num)
+    f.write('\n' + '1.번호' + str(num))
+
+    print('2.논문제목:',title)
+    title2.append(title)
+    f.write('\n' + '2.논문제목:' + title)
+    ...
+    ...
+    
+    f.close()
+    
+    if num > cnt:
+      break
+    time.sleep(1) #페이지 변경 전 1초 대기
+a+=1
+b = str(a)
+
+try:
+  driver.find_element(By.LINK_TEXT,'%s'%b).click()
+except:
+  driver.find_element(By.LINK_TEXT('다음 페이지로')).click()
+```  
+![image](https://user-images.githubusercontent.com/82145878/178104239-63e66d0d-000c-4479-81dd-c891ae05ee17.png)  
+
+
+## 수집된 데이터를 xls 와 csv 형태로 저장하기
+```python
+import pandas as pd
+
+df = pd.DataFrame()
+df['번호'] = no
+df['제목'] = pd.Series(title)
+df['저자'] = pd.Series(writer)
+df['소속기관'] = pd.Series(org)
+#Series를 쓰는 이유 : 중간에 데이터가 없는 등 비어있으면 DataFrame을 만들수 없다고 에러발생
+# xls 형태로 저장하기
+df.to_excel(fx_name, index = False, encoding = 'utf-8', engine='openpyxl')
+# csv 형태로 저장하기
+df.to_csv(fc_name, index = False, encoding = 'utf-8-sig')

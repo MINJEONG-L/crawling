@@ -309,3 +309,38 @@ for e in range(0,len(img_src)):
       urllib.urlopener.retrieve(img_src2[e],str(file_no) +'jpg')
 ```
       
+* 엑셀 파일에 이미지 삽입하기
+```python
+import win32com.client as win32
+import win32api #pywin32, pypiwin32 설치후 동작
+#파이썬 프롬포트를 관리자 권한으로 실행해야 에러가 없다.
+#파이썬 쉘을 관리자 권한으로 실행 후 불러오기로 이 소스 실행
+
+excel = win32.gencache.EnsureDispatch('Excel.Application')
+wb = excel.Workbooks.Open(fx_name)
+sheet = wb.ActiveSheet
+sheet.wb.ActiveSheet
+sheet.Columns(3).ColumnWidth = 30  #이미지 가로 사이즈에 맞게 컬럼 크기 조정
+row_cnt = cnt+1
+sheet.Rows("2:%s" %row_cnt).RowHeight = 120 # 이미지 세로 사이즈에 맞게 로우 크기 조정
+
+ws = wb.Sheets("Sheet1")
+col_name2 = []
+file_name2 = []
+
+for a in range(2, cnt+2):
+  col_name = 'C'+str(a)
+  col_name2.append(col_name)
+  
+for b in range(1,cnt+1):
+  file_name = img_dir + '\\' + str(b) + '.jpg'
+  file_name2.append(file_name)
+  
+for i in range(0,cnt):
+  rng = ws.Range(col_name2[i])
+  image = ws.Shapes.AddPicture(file_name2[i], False, True, rng.Left, rng.Top, 130, 100)
+  excel.Visible = True
+  excel.ActiveWorkbook.Save()
+
+driver.close()
+```

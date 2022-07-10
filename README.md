@@ -214,4 +214,34 @@ os.chdir(f_dir+s+'-'+query_txt)
 ## 이미지 크롤링
 **이미지를 수집 : 웹 페이지에서 원하는 이미지의 URL 주소를 추출한 후 웹서버에서 이미지를 다운로드**  
 **인증 정보 없이 그냥 가져올 수 있는 방법과 인증 정보를 보낸 후 이미지를 가져올 수 있는 경우가 있다.**  
+* 주의사항
+  1) 소스코드에서 이미지 파일의 원본 주소를 추출하기
+  2) 추출된 내용을 다운로드 하는 과정에서 생기는 크롬 경고창 해결하기
+  3) 원본 이미지의 경로와 이름에 한글이 포함되어 있을 경우 발생하는 문제 해결하기
+  
+ (1) 클라이언트 정보가 필요 없는 경우
+  ```python
+  #추가된 필요한 모듈
+  import urllib.request
+  import urllib.parse
+  
+  #사용자가 요청한 건수만큼 더보기 클릭하기
+  for a in range(0,page_cnt):
+    try:
+      driver.find_element(By.XPATH,'//*[@id="divEducationList"]/div/div[2]/div[5]/a[1]').click()
+      time.sleep(2)
+      try:
+        result = driver.switch_to_alert()
+        result.accept()
+      except:
+        continue
+    except:
+      print("페이지 이동이 끝났습니다. 이제 데이터를 수집하겠습니다.")
+      break
+ ```
+  - switch_to_alert.accept() : 알람 메세지(에러 메세지) 발생시 확인(승인)하기
+  ![image](https://user-images.githubusercontent.com/82145878/178143911-99821b2f-cb0e-4aca-aa15-fd9b994ac1a9.png)
+  - switch_to_alert.dismiss() : 알람 메시지 발생시 취소 누르기
+  - switch_to_alert.text : 알림창 메세지 가져오기
+  - switch_to_alert.send_keys("입력글") : 알림창에 글 입력하기
   

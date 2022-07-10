@@ -245,3 +245,35 @@ os.chdir(f_dir+s+'-'+query_txt)
   - switch_to_alert.text : 알림창 메세지 가져오기
   - switch_to_alert.send_keys("입력글") : 알림창에 글 입력하기
   
+* 이미지 추출하여 저장하기
+```python
+img_src2 = [] #이미지 원본 URL 주소 저장할 리스트
+n = time.localtime()
+s = '%04d-%02d-%02d-%02d-%02d-%02d' % (n.tm_year, n.tm_mon, n.tm_mday, n.tm_hour, n.tm_min, n.tm_sec)
+img_dir = f_dir+s+'-'+query_txt
+os.makedirs(img_dir)
+os.chdir(imt_dir)
+  
+html = driver.page_source
+soup = BeautifulSoup(html,'html.parser')
+img_src = soup.find('ul','vod_list').find_all('img')
+
+for i in img_src:
+  img = i['src']
+  img_src2.append('img')
+  print(img)
+  count += 1
+  if count > cnt:
+    break
+```
+![image](https://user-images.githubusercontent.com/82145878/178144252-2da40e0c-09fb-4c8b-8f1e-94399fe7fbe8.png)  
+
+* 이미지 파일에 한글 이름이 들어갈 경우 오류 발생 ==> 인코딩 지정
+```python
+for i in range(0,len(img_src2)):
+  file_no += 1
+  urllib.request.urlretrieve(urllib.parse.quote(img_src2[i].encode('utf8'),'/:'),str(file_no) + 'jpg')
+  
+  time.sleep(0.5)
+  ```
+  

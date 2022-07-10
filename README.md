@@ -240,10 +240,11 @@ os.chdir(f_dir+s+'-'+query_txt)
       break
  ```
   - switch_to_alert.accept() : 알람 메세지(에러 메세지) 발생시 확인(승인)하기
-  ![image](https://user-images.githubusercontent.com/82145878/178143911-99821b2f-cb0e-4aca-aa15-fd9b994ac1a9.png)
+ ![image](https://user-images.githubusercontent.com/82145878/178143911-99821b2f-cb0e-4aca-aa15-fd9b994ac1a9.png)
   - switch_to_alert.dismiss() : 알람 메시지 발생시 취소 누르기
   - switch_to_alert.text : 알림창 메세지 가져오기
-  - switch_to_alert.send_keys("입력글") : 알림창에 글 입력하기
+  - switch_to_alert.send_keys("입력글") : 알림창에 글 입력하기  
+  
   
 * 이미지 추출하여 저장하기
 ```python
@@ -277,3 +278,24 @@ for i in range(0,len(img_src2)):
   time.sleep(0.5)
   ```
   
+* 스크롤 다운 함수
+```python
+ def scroll_down(driver):
+    driver.execute_script("window.scrollBy(0,1000)")
+    time.sleep(1)
+  
+for a in range(1,real_cnt + 1):
+  for b in range(0,5):
+    scroll_down(driver)
+    time.sleep(1)
+```  
+
+* 수집된 url 주소로 이미지 파일 가져와서 저장하기
+```python
+for e in range(0,len(img_src)):
+  class AppURLopener(urllib.request.FancyURLopener):
+      version = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, \like Gecko) Chrome/47.0.2526.69 Safari/537.36"
+      urllib.urlopener = AppURLopener()
+      urllib.urlopener.retrieve(img_src2[e],str(file_no) +'jpg')
+```
+      

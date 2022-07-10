@@ -288,8 +288,18 @@ for a in range(1,real_cnt + 1):
   for b in range(0,5):
     scroll_down(driver)
     time.sleep(1)
-```  
-
+```    
+    
+  
+    - driver.execute_script() 함수는 파이썬 코드에서 외부 os에 있는 특정 함수나 스크립트를 실행할 때 사용
+    - 이 함수의 괄호안에 실행하고 싶은 OS의 함수나 기능을 적으면 된다.
+    - window.scrollTo() 함수 : 윈도의 마우스 스크롤 하는 기능을 실행하기 위해서
+    - window.scrollTo(x좌표, y좌표) : 기준값이 절대 좌표 (입력한 값 만큼 이동)
+    - window.scrollBy() 함수는 기준값이 상대좌표
+    - document.body.scrollHeight : 화면 끝까지 이동  
+  
+    
+  
 * 수집된 url 주소로 이미지 파일 가져와서 저장하기
 ```python
 for e in range(0,len(img_src)):
